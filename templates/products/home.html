@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - InterWebX Store{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center py-5">
+                <h1 class="display-4 fw-bold mb-3">
+                    <i class="fas fa-rocket"></i> Welcome to InterWebX Store
+                </h1>
+                <p class="lead mb-4">Discover amazing products with cutting-edge technology and unbeatable prices</p>
+                <a href="{% url 'products:product_list' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-shopping-bag"></i> Shop Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+<div class="row mb-5">
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-box fa-3x text-primary mb-3"></i>
+                <h3 class="text-primary">{{ total_products }}+</h3>
+                <p class="text-muted">Quality Products</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-list fa-3x text-success mb-3"></i>
+                <h3 class="text-success">{{ total_categories }}+</h3>
+                <p class="text-muted">Categories</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-shipping-fast fa-3x text-info mb-3"></i>
+                <h3 class="text-info">Free</h3>
+                <p class="text-muted">Shipping</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-headset fa-3x text-warning mb-3"></i>
+                <h3 class="text-warning">24/7</h3>
+                <p class="text-muted">Support</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Featured Categories -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="text-center mb-4">
+            <i class="fas fa-star text-warning"></i> Featured Categories
+        </h2>
+    </div>
+    {% for category in categories %}
+        <div class="col-lg-2 col-md-4 col-sm-6 mb-4">
+            <div class="card h-100 category-card">
+                <div class="card-body text-center">
+                    {% if category.name == 'Electronics' %}
+                        <i class="fas fa-laptop fa-3x text-primary mb-3"></i>
+                    {% elif category.name == 'Clothing' %}
+                        <i class="fas fa-tshirt fa-3x text-danger mb-3"></i>
+                    {% elif category.name == 'Books' %}
+                        <i class="fas fa-book fa-3x text-success mb-3"></i>
+                    {% elif category.name == 'Home & Garden' %}
+                        <i class="fas fa-home fa-3x text-info mb-3"></i>
+                    {% elif category.name == 'Sports & Fitness' %}
+                        <i class="fas fa-dumbbell fa-3x text-warning mb-3"></i>
+                    {% else %}
+                        <i class="fas fa-tag fa-3x text-secondary mb-3"></i>
+                    {% endif %}
+                    <h6 class="card-title">{{ category.name }}</h6>
+                    <a href="{{ category.get_absolute_url }}" class="btn btn-outline-primary btn-sm">
+                        Explore
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Featured Products -->
+<div class="row mb-5">
+    <div class="col-12">
+        <h2 class="text-center mb-4">
+            <i class="fas fa-fire text-danger"></i> Featured Products
+        </h2>
+    </div>
+    {% for product in featured_products %}
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="card h-100 product-card">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}">
+                {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center product-image">
+                        {% if 'Headphones' in product.name %}
+                            <i class="fas fa-headphones fa-4x text-muted"></i>
+                        {% elif 'Phone' in product.name or 'Case' in product.name %}
+                            <i class="fas fa-mobile-alt fa-4x text-muted"></i>
+                        {% elif 'Laptop' in product.name %}
+                            <i class="fas fa-laptop fa-4x text-muted"></i>
+                        {% elif 'Shirt' in product.name or 'T-Shirt' in product.name %}
+                            <i class="fas fa-tshirt fa-4x text-muted"></i>
+                        {% elif 'Jean' in product.name %}
+                            <i class="fas fa-user fa-4x text-muted"></i>
+                        {% elif 'Jacket' in product.name %}
+                            <i class="fas fa-user-tie fa-4x text-muted"></i>
+                        {% elif 'Book' in product.name or 'Guide' in product.name or 'Novel' in product.name %}
+                            <i class="fas fa-book fa-4x text-muted"></i>
+                        {% elif 'Plant' in product.name or 'Pot' in product.name %}
+                            <i class="fas fa-seedling fa-4x text-muted"></i>
+                        {% elif 'Lamp' in product.name %}
+                            <i class="fas fa-lightbulb fa-4x text-muted"></i>
+                        {% elif 'Yoga' in product.name or 'Mat' in product.name %}
+                            <i class="fas fa-heart fa-4x text-muted"></i>
+                        {% elif 'Water' in product.name or 'Bottle' in product.name %}
+                            <i class="fas fa-tint fa-4x text-muted"></i>
+                        {% else %}
+                            <i class="fas fa-box fa-4x text-muted"></i>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title">{{ product.name }}</h6>
+                    <p class="card-text text-muted small">{{ product.description|truncatewords:10 }}</p>
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="h5 text-primary mb-0">${{ product.price }}</span>
+                            {% if product.stock > 0 %}
+                                <small class="text-success">In Stock</small>
+                            {% else %}
+                                <small class="text-danger">Out of Stock</small>
+                            {% endif %}
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-eye"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Features Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h3 class="text-center mb-4">Why Choose InterWebX Store?</h3>
+                <div class="row">
+                    <div class="col-md-4 text-center mb-3">
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                        <h5>Secure Shopping</h5>
+                        <p class="text-muted">Your data and transactions are protected with advanced security measures.</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <i class="fas fa-undo fa-3x text-success mb-3"></i>
+                        <h5>Easy Returns</h5>
+                        <p class="text-muted">30-day return policy for all products. No questions asked.</p>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <i class="fas fa-award fa-3x text-warning mb-3"></i>
+                        <h5>Quality Guaranteed</h5>
+                        <p class="text-muted">All products are carefully selected and quality tested.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="row">
+    <div class="col-12">
+        <div class="card bg-gradient text-white text-center" style="background: linear-gradient(45deg, #007bff, #6610f2);">
+            <div class="card-body py-5">
+                <h3 class="mb-3">Ready to Start Shopping?</h3>
+                <p class="lead mb-4">Join thousands of satisfied customers and discover amazing deals today!</p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="{% url 'products:product_list' %}" class="btn btn-light btn-lg">
+                        <i class="fas fa-shopping-cart"></i> Browse Products
+                    </a>
+                    {% if not user.is_authenticated %}
+                        <a href="{% url 'accounts:register' %}" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-user-plus"></i> Sign Up
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.category-card:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    transition: transform 0.3s ease;
+}
+
+.product-image {
+    height: 200px;
+    object-fit: cover;
+}
+
+.bg-gradient {
+    background: linear-gradient(45deg, #007bff, #6610f2) !important;
+}
+</style>
+{% endblock %}
